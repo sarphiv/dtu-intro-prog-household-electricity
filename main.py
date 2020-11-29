@@ -18,7 +18,7 @@ for the hourly
 
 
 plotting
-    input data, zone wanted
+    input data, zone based wanted
     
     
         if zones, 
@@ -43,16 +43,13 @@ copy pasta ui code
 data statistics same form
 
 
-
+add function docstrings
 
 ADD SOURCE REFERENCE FOR PREVIOUS PROJECT
 
 
+
 """
-
-
-#Don't like the dates being floats, should keep them ints
-
 
 #%%
 from sys import exit
@@ -63,3 +60,5 @@ from lib.data import load_measurements
 print(load_measurements("testdata1.csv", "forward fill"))
 
 
+
+#%%
