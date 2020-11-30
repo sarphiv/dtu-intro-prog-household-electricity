@@ -58,11 +58,15 @@ oh ffs, we need to have zeros for hours with no data
 from sys import exit
 from lib.data import load_measurements
 from lib.aggregate import aggregate_measurements
+from lib.statistics import print_statistics
 
 
 #%%
-(tvec, data) = load_measurements("testdata1.csv", "backward fill")
+
+(tvec, data) = load_measurements("2008.csv", "backward fill")
 
 
-aggregate_measurements(tvec, data, "hour of the day")
+#aggregate_measurements(tvec, data, "minute")
+
+print_statistics(tvec, data)
 #%%

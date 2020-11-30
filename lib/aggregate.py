@@ -46,6 +46,8 @@ def time_unit_reverser(columns):
 
 
 period_to_columns = {
+    "second": [0, 1, 2, 3, 4, 5],
+    "minute": [0, 1, 2, 3, 4],
     "hour": [0, 1, 2, 3],
     "day": [0, 1, 2],
     "month": [0, 1],
@@ -99,6 +101,8 @@ def add_zero_hour_measurements(grouped_zones, tu_selector):
 def aggregate_measurements(tvec, data, period):
     """
     REMARK: Assumes "period" input is one of:
+        "second"
+        "minute"
         "hour"
         "day"
         "month"
