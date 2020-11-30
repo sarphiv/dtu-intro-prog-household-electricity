@@ -9,7 +9,7 @@ def display_main_menu(state, menu):
     #Always show main menu
     try:
         while True:
-            prompt_options(menu, state.filters.as_descriptions())
+            prompt_options(menu, state.status)
     #Except break out when the user wants to close the program
     except SystemExit:
         pass

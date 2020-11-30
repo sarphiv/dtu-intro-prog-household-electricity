@@ -1,7 +1,12 @@
-from lib.ui_base import prompt_continue
-from lib.data import file_exists, dataLoad
+from lib.ui_base import prompt_continue, prompt_options
+from lib.data import file_exists, load_measurements
+from lib.aggregate import aggregate_data, aggregate_measurements
 
 from os import getcwd, path
+
+
+def data_loader_action(state, path, fmode):
+    return lambda: print("Loading data...") or state.set_raw_data(load_measurements(path, fmode))
 
 
 def display_load_data_menu(state):
@@ -13,19 +18,28 @@ def display_load_data_menu(state):
     #Prompt for file path
     print("Input data file path:")
     data_path = input(getcwd() + path.sep)
+    #Print empty line for readability
+    print()
     
     #If file exists, load data
     if file_exists(data_path):
-        #Load data
-        print("Loading data...")
-        state.raw_data = dataLoad(data_path)
-        
-        #Filter data using the active filters
+        fill_mode_menu = [
+            ("Fill corrupted with latest valid", data_loader_action(state, data_path, "forward fill")),
+            ("Fill corrupted with next valid", data_loader_action(state, data_path, "backward fill")),
+            ("Drop corrupted", data_loader_action(state, data_path, "drop"))
+        ]
+
+        #Prompt for fill mode and load data
+        prompt_options(fill_mode_menu)
+
+        #Finished loading data
         print("Loaded data")
-        state.filtered_data = state.filters.apply(state.raw_data)
+        
+        #Aggregate data
+        aggregate_data(state)
 
         #Prompt user to contiue
-        prompt_continue()
+        prompt_continue(start_newline=True)
     #Else, inform user of failure, prompt to continue
     else:
         prompt_continue("Path does not lead to a file - press enter to continue...", start_newline=True)

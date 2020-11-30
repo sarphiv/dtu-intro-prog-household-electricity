@@ -45,8 +45,17 @@ def time_unit_reverser(columns):
 
 
 
+period_to_status = {
+    "none": "Usage directly from measurements",
+    "minute": "Usage per minute",
+    "hour": "Usage per minute",
+    "day": "Usage per day",
+    "month": "Usage per month",
+    "hour of the day": "Usage per hour of the day",
+}
+
 period_to_columns = {
-    "second": [0, 1, 2, 3, 4, 5],
+    "none": [0, 1, 2, 3, 4, 5],
     "minute": [0, 1, 2, 3, 4],
     "hour": [0, 1, 2, 3],
     "day": [0, 1, 2],
@@ -101,7 +110,7 @@ def add_zero_hour_measurements(grouped_zones, tu_selector):
 def aggregate_measurements(tvec, data, period):
     """
     REMARK: Assumes "period" input is one of:
-        "second"
+        "none"
         "minute"
         "hour"
         "day"
@@ -142,3 +151,11 @@ def aggregate_measurements(tvec, data, period):
     
 
     return (tvec_a, data_a)
+
+def aggregate_data(state):
+    #Start aggregating data
+    print("\nAggregating data...")
+    state.aggregated_data = aggregate_measurements(*state.raw_data, state.aggregation_mode)
+    
+    #Aggregated data
+    print("Aggregated data")

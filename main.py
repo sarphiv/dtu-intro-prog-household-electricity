@@ -40,8 +40,6 @@ plotting
 copy pasta ui code
 
 
-data statistics same form
-
 
 add function docstrings
 
@@ -49,24 +47,45 @@ ADD SOURCE REFERENCE FOR PREVIOUS PROJECT
 
 
 
-oh ffs, we need to have zeros for hours with no data
+
+lazy, let's just show aggregate type and watt-hour status all the time
 
 
 """
 
-#%%
+from lib.ui_menu_aggregate import display_aggregate_menu
+from lib.ui_menu_main import display_main_menu
 from sys import exit
+from lib.state import State
 from lib.data import load_measurements
 from lib.aggregate import aggregate_measurements
+from lib.ui_menu_statistics import display_statistics
+from lib.ui_menu_data import display_load_data_menu
 from lib.statistics import print_statistics
 
 
-#%%
+"""
+The program state consists of:
+    Raw data loaded in.
+    Aggregated data of the raw data
+    Status messages
+"""
+#Initialize state of program
+state = State()
 
-(tvec, data) = load_measurements("2008.csv", "backward fill")
+
+#Define main menu of the program. This is where the program starts.
+main_menu = [
+    #Parameters consist of program state and definition of the menu to show.
+    # Some options do not have a second parameter,
+    # because they do not lead to menus.
+    ("Load data",                         lambda: display_load_data_menu(state)),
+    ("Aggregate data",                    lambda: display_aggregate_menu(state)),
+    ("Display statistics",                lambda: display_statistics(state)),
+    ("Visualize electricity consumption", lambda: print("NOT DONE")),
+    #Option to close the program
+    ("Quit",                              exit),
+]
 
 
-#aggregate_measurements(tvec, data, "minute")
-
-print_statistics(tvec, data)
-#%%
+display_main_menu(state, main_menu)

@@ -25,8 +25,8 @@ def inform_if_data_unavailable(data):
     #If data is unavailable, inform and prompt user to continue.
     if check_data_unavailable(data):
         prompt_continue("Unable to execute operation.\n\
-No data available after application of filters.\n\
-Either load in more data or change the filters.\n\n\
+No data available after aggregation.\n\
+Either load in more data or (if possible) change the aggregation mode.\n\n\
 Press enter to continue...")
         return True
     else:
