@@ -1,6 +1,6 @@
 from lib.ui_base import prompt_continue, prompt_options
 from lib.data import file_exists, load_measurements
-from lib.aggregate import aggregate_data
+from lib.aggregate import aggregate_sort_data
 
 from os import getcwd, path
 
@@ -20,13 +20,18 @@ def display_load_data_menu(state):
     data_path = input(getcwd() + path.sep)
     #Print empty line for readability
     print()
-    
+
+
     #If file exists, load data
     if file_exists(data_path):
+        #Create helper function to load data with different fill modes
+        dl_action = lambda fmode: data_loader_action(state, data_path, fmode)
+        
+        #Create fill mode menu
         fill_mode_menu = [
-            ("Fill corrupted with latest valid", data_loader_action(state, data_path, "forward fill")),
-            ("Fill corrupted with next valid", data_loader_action(state, data_path, "backward fill")),
-            ("Drop corrupted", data_loader_action(state, data_path, "drop"))
+            ("Fill corrupted with latest valid", dl_action("forward fill")),
+            ("Fill corrupted with next valid",   dl_action("backward fill")),
+            ("Drop corrupted",                   dl_action("drop"))
         ]
 
         #Prompt for fill mode and load data
@@ -34,9 +39,10 @@ def display_load_data_menu(state):
 
         #Finished loading data
         print("Loaded data", end="\n\n")
-        
+
         #Aggregate data
-        aggregate_data(state)
+        aggregate_sort_data(state)
+
 
         #Prompt user to contiue
         prompt_continue()

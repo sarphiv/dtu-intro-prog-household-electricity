@@ -166,6 +166,11 @@ def enforce_fmode(fmode, raw_zones):
                f"{'first' if fmode_forwfill_impossible else 'last'} row is corrupted. " +
                "Falling back to dropping corrupted rows")
         return "drop"
+    #Else if fmode is unknown, print warning and default to "fmode = drop"
+    elif fmode not in fmodes:
+        eprint(f"Invalid fill mode: {fmode}" +
+               "Falling back to dropping corrupted rows")
+        return "drop"
     #Else, allow requested "fmode"
     #WARN: Assuming there are only three "fmode = { "forward fill", "backward fill", "drop" }".
     else:

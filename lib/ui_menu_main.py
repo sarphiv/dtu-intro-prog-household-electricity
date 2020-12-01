@@ -10,6 +10,6 @@ def display_main_menu(state, menu):
     try:
         while True:
             prompt_options(menu, state.status)
-    #Except break out when the user wants to close the program
+    #Except, break out when the user wants to close the program
     except SystemExit:
         pass

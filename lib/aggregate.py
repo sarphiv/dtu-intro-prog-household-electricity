@@ -160,7 +160,8 @@ def aggregate_measurements(tvec, data, period):
 
     return (tvec_a, data_a)
 
-def aggregate_data(state):
+
+def aggregate_sort_data(state):
     #Start aggregating data
     print("Aggregating data...")
     state.aggregated_data = aggregate_measurements(*state.raw_data, state.aggregation_mode)
