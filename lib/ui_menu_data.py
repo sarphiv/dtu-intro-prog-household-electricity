@@ -6,6 +6,9 @@ from os import getcwd, path
 
 
 def data_loader_action(state, path, fmode):
+    """
+    Informs user data is being loaded and then loads raw data into program state with the specified fill mode.
+    """
     return lambda: print("Loading data...") or state.set_raw_data(load_measurements(path, fmode))
 
 
@@ -18,6 +21,7 @@ def display_load_data_menu(state):
     #Prompt for file path
     print("Input data file path:")
     data_path = input(getcwd() + path.sep)
+
     #Print empty line for readability
     print()
 
