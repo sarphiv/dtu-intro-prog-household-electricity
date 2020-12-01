@@ -34,9 +34,17 @@ def reverse_time_unit(time_unit, columns):
     REMARK: Assumes "time_unit" is not empty
     """
     time = np.zeros(time_data_length, dtype=np.dtype(time_unit[0]))
+    
+    #If reversing a date (more than one column)
+    # make sure days and months cannot be 0
+    date_and_zero_month = len(columns) > 1
+    if date_and_zero_month:
+        time[1] = 1
+        time[2] = 1
 
     for unit, c in zip(time_unit, columns):
         time[c] = unit
+
 
     return time
 
@@ -48,7 +56,7 @@ def time_unit_reverser(columns):
 period_to_status = {
     "none": "Usage directly from measurements",
     "minute": "Usage per minute",
-    "hour": "Usage per minute",
+    "hour": "Usage per hour",
     "day": "Usage per day",
     "month": "Usage per month",
     "hour of the day": "Usage per hour of the day",
@@ -154,8 +162,17 @@ def aggregate_measurements(tvec, data, period):
 
 def aggregate_data(state):
     #Start aggregating data
-    print("\nAggregating data...")
+    print("Aggregating data...")
     state.aggregated_data = aggregate_measurements(*state.raw_data, state.aggregation_mode)
     
+    #Sort data if there is data
+    (times, zones) = state.aggregated_data
+    if len(times) > 0:
+        #Get sorted indexes with seconds as primary sort key
+        sorted_indexes = np.lexsort(times.T[::-1])
+        
+        #Access data in sorted order and save
+        state.aggregated_data = (times[sorted_indexes], zones[sorted_indexes])
+
     #Aggregated data
-    print("Aggregated data")
+    print("Aggregated data", end="\n\n")

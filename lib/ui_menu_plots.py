@@ -1,17 +1,22 @@
+from lib.ui_base import prompt_options
 from lib.ui_utilities import inform_if_data_unavailable
-from lib.plot import dataPlot
+from lib.plot import show_plot
 
 
-def display_plots(state):
+def display_plots_menu(state):
     """
-    Opens a GUI to show the filtered data with plots.
+    Opens a GUI to show the aggregated data with plots.
     Does not continue if there is no data available.
     """
 
     #If no data is unavailable, inform user and return
-    if inform_if_data_unavailable(state.filtered_data):
+    if inform_if_data_unavailable(state.aggregated_zones):
         return
-
-    #Show GUI with plots
-    print("Close plots window to continue...", end="\n\n")
-    dataPlot(state.filtered_data)
+    
+    
+    plots_menu = [
+        ("Zone usage",     lambda: show_plot(*state.aggregated_data, combined=False, labels=state.status)),
+        ("Combined usage", lambda: show_plot(*state.aggregated_data, combined=True,  labels=state.status))
+    ]
+    
+    prompt_options(plots_menu, state.status)

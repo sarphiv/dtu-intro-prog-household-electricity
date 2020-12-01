@@ -15,7 +15,7 @@ class State:
         self.aggregation_status = None
         self.set_aggregation_mode(self.aggregation_mode)
         
-        self.measurement_unit_status = "Measurements in watt-hour"
+        self.measurement_unit_status = "Usage in watt-hour"
 
 
     def set_raw_data(self, raw_data):

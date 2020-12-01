@@ -1,6 +1,6 @@
 from lib.ui_base import prompt_continue, prompt_options
 from lib.data import file_exists, load_measurements
-from lib.aggregate import aggregate_data, aggregate_measurements
+from lib.aggregate import aggregate_data
 
 from os import getcwd, path
 
@@ -33,13 +33,13 @@ def display_load_data_menu(state):
         prompt_options(fill_mode_menu)
 
         #Finished loading data
-        print("Loaded data")
+        print("Loaded data", end="\n\n")
         
         #Aggregate data
         aggregate_data(state)
 
         #Prompt user to contiue
-        prompt_continue(start_newline=True)
+        prompt_continue()
     #Else, inform user of failure, prompt to continue
     else:
         prompt_continue("Path does not lead to a file - press enter to continue...", start_newline=True)

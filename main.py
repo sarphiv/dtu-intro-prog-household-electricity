@@ -46,13 +46,19 @@ add function docstrings
 ADD SOURCE REFERENCE FOR PREVIOUS PROJECT
 
 
+split up some files
+
+prevent them from showing plot if data unavailable
 
 
-lazy, let's just show aggregate type and watt-hour status all the time
+add text to say plot is loading..., and to close plot to return or whatever
+
 
 
 """
 
+from lib.ui_menu_plots import display_plots_menu
+from lib.plot import show_plot
 from lib.ui_menu_aggregate import display_aggregate_menu
 from lib.ui_menu_main import display_main_menu
 from sys import exit
@@ -82,10 +88,11 @@ main_menu = [
     ("Load data",                         lambda: display_load_data_menu(state)),
     ("Aggregate data",                    lambda: display_aggregate_menu(state)),
     ("Display statistics",                lambda: display_statistics(state)),
-    ("Visualize electricity consumption", lambda: print("NOT DONE")),
+    ("Visualize electricity consumption", lambda: display_plots_menu(state)),
     #Option to close the program
     ("Quit",                              exit),
 ]
 
 
 display_main_menu(state, main_menu)
+

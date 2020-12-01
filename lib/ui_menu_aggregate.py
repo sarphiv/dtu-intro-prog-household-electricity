@@ -28,4 +28,5 @@ def display_aggregate_menu(state):
     #Update aggregated data
     aggregate_data(state)
     
+    
 

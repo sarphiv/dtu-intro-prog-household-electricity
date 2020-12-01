@@ -27,6 +27,7 @@ def print_statistics(tvec, data):
     quartiles = get_quartiles(data).T
     summed_quartiles = get_quartiles(data.sum(axis=1))
     quartiles = np.append(quartiles, np.expand_dims(summed_quartiles, 0), axis=0)
+    quartiles = np.round(quartiles, 2)
 
     print_row(table_header)
     
